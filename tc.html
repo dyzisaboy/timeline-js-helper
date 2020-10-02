@@ -7,7 +7,7 @@
     <!-- <link rel="stylesheet" href="./TimeLineDataClass.js" type="text/Javascript"> -->
     <script type="text/javascript" src='http://unpkg.com/timelines-chart'></script>
     <script type="text/javascript" src='./TimeLineDataClass.js'></script>
-    <title>Timelines Chart</title>
+    <title>Timelines Chart Helper Sample</title>
     <script type="text/javascript">
         // import { SegmentData } from './TimeLineDataClass.mjs';
         // import { GroupData } from './TimeLineDataClass.mjs';
@@ -16,32 +16,49 @@
         function getMyData() {
 
             let mwGroup = new Group("MW");
-            let otherGroup = new Group("Other");
 
             let mitsGroupData = new GroupData("MTS");
             let mmmsGroupData = new GroupData("MMS");
+            let mwRestGroupData = new GroupData("MW Rest");
 
             mitsGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 9:30:00"), new Date("2020/09/26 10:00:00"), SegmentData.TaskTypes.prodRelease));
             mitsGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 10:00:00"), new Date("2020/09/26 10:30:00"), SegmentData.TaskTypes.test));
             mmmsGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 10:30:00"), new Date("2020/09/26 11:00:00"), SegmentData.TaskTypes.prodRelease));
+            mwRestGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 11:00:00"), new Date("2020/09/26 13:00:00"), SegmentData.TaskTypes.rest));
             
             mwGroup.addGroupData(mitsGroupData);
             mwGroup.addGroupData(mmmsGroupData);
+            mwGroup.addGroupData(mwRestGroupData);
 
-            return [mwGroup];
+            let otherGroup = new Group("Other");
+
+            let mbaGroupData = new GroupData("MBA");
+            let mbaRestGroupData = new GroupData("MBA Rest");
+
+            mbaGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 14:00:00"), new Date("2020/09/26 15:00:00"), SegmentData.TaskTypes.prodRelease));
+            mbaGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 15:00:00"), new Date("2020/09/26 16:00:00"), SegmentData.TaskTypes.test));
+            mbaRestGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 09:00:00"), new Date("2020/09/26 14:00:00"), SegmentData.TaskTypes.rest));
+            otherGroup.addGroupData(mbaRestGroupData);
+            otherGroup.addGroupData(mbaGroupData);
+
+            return [mwGroup, otherGroup];
         }
     </script>
 </head>
 
 <body>
-    <script>
-        const myData = getMyData();
+    <h1>Timelines Chart Helper Sample</h1>
+    <div id="chart-div">
 
-        TimelinesChart()(document.body)
-            .zScaleLabel('My Scale Units')
-            .zQualitative(true)
-            .data(myData);
-    </script>
+        <script>
+            const myData = getMyData();
+
+            TimelinesChart()(document.getElementById('chart-div'))
+                .zScaleLabel('My Scale Units')
+                .zQualitative(true)
+                .data(myData);
+        </script>
+    </div>
 </body>
 
 </html>
