@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link rel="stylesheet" href="./TimeLineDataClass.js" type="text/Javascript"> -->
+    <script type="text/javascript" src='http://unpkg.com/timelines-chart'></script>
+    <script type="text/javascript" src='./TimeLineDataClass.js'></script>
+    <title>Timelines Chart</title>
+    <script type="text/javascript">
+        // import { SegmentData } from './TimeLineDataClass.mjs';
+        // import { GroupData } from './TimeLineDataClass.mjs';
+        // import { Group } from './TimeLineDataClass.mjs';
+
+        function getMyData() {
+
+            let mwGroup = new Group("MW");
+            let otherGroup = new Group("Other");
+
+            let mitsGroupData = new GroupData("MTS");
+            let mmmsGroupData = new GroupData("MMS");
+
+            mitsGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 9:30:00"), new Date("2020/09/26 10:00:00"), SegmentData.TaskTypes.prodRelease));
+            mitsGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 10:00:00"), new Date("2020/09/26 10:30:00"), SegmentData.TaskTypes.test));
+            mmmsGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 10:30:00"), new Date("2020/09/26 11:00:00"), SegmentData.TaskTypes.prodRelease));
+            
+            mwGroup.addGroupData(mitsGroupData);
+            mwGroup.addGroupData(mmmsGroupData);
+
+            return [mwGroup];
+        }
+    </script>
+</head>
+
+<body>
+    <script>
+        const myData = getMyData();
+
+        TimelinesChart()(document.body)
+            .zScaleLabel('My Scale Units')
+            .zQualitative(true)
+            .data(myData);
+    </script>
+</body>
+
+</html>
