@@ -4,15 +4,6 @@
  */
 class SegmentData {
 
-    static TaskTypes = {
-        addLib: "Prepare Library",
-        uatRelease:  "UAT Release",
-        prodRelease:  "Prod Release",
-        test:  "Test",
-        monitor:  "Monitor",
-        rest:  "Break"
-    }
-
     /**
      * 
      * @param {Date} startDate start date of timeRange

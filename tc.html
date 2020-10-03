@@ -13,6 +13,15 @@
         // import { GroupData } from './TimeLineDataClass.mjs';
         // import { Group } from './TimeLineDataClass.mjs';
 
+        var TaskTypes = {
+            addLib: "Prepare Library",
+            uatRelease:  "UAT Release",
+            prodRelease:  "Prod Release",
+            test:  "Test",
+            monitor:  "Monitor",
+            rest:  "Break"
+        }
+
         function getMyData() {
 
             let mwGroup = new Group("MW");
@@ -21,23 +30,40 @@
             let mmmsGroupData = new GroupData("MMS");
             let mwRestGroupData = new GroupData("MW Rest");
 
-            mitsGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 9:30:00"), new Date("2020/09/26 10:00:00"), SegmentData.TaskTypes.prodRelease));
-            mitsGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 10:00:00"), new Date("2020/09/26 10:30:00"), SegmentData.TaskTypes.test));
-            mmmsGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 10:30:00"), new Date("2020/09/26 11:00:00"), SegmentData.TaskTypes.prodRelease));
-            mwRestGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 11:00:00"), new Date("2020/09/26 13:00:00"), SegmentData.TaskTypes.rest));
+            mitsGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 9:30:00"), new Date("2020/09/26 10:00:00"), TaskTypes.prodRelease));
+            mitsGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 10:00:00"), new Date("2020/09/26 10:30:00"), TaskTypes.test));
+            mmmsGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 10:30:00"), new Date("2020/09/26 11:00:00"), TaskTypes.prodRelease));
+            mwRestGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 11:00:00"), new Date("2020/09/26 13:00:00"), TaskTypes.rest));
             
+            mwGroup.addGroupData(mwRestGroupData);
             mwGroup.addGroupData(mitsGroupData);
             mwGroup.addGroupData(mmmsGroupData);
-            mwGroup.addGroupData(mwRestGroupData);
+
+            let eai1GroupData = new GroupData("EAI-1");
+            let eai2GroupData = new GroupData("EAI-2");
+            let eaiMonitorGroupData = new GroupData("EAI-Monitor");
+
+            eai1GroupData.addSegmentData(new SegmentData(new Date("2020/09/26 14:00:00"), new Date("2020/09/26 18:00:00"), TaskTypes.prodRelease));
+            mwRestGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 18:00:00"), new Date("2020/09/26 19:00:00"), TaskTypes.rest));
+            eai2GroupData.addSegmentData(new SegmentData(new Date("2020/09/26 19:00:00"), new Date("2020/09/27 00:00:00"), TaskTypes.prodRelease));
+            eaiMonitorGroupData.addSegmentData(new SegmentData(new Date("2020/09/27 00:00:00"), new Date("2020/09/27 11:00:00"), TaskTypes.monitor));
+            mwRestGroupData.addSegmentData(new SegmentData(new Date("2020/09/27 11:00:00"), new Date("2020/09/27 12:00:00"), TaskTypes.rest));
+            eaiMonitorGroupData.addSegmentData(new SegmentData(new Date("2020/09/27 12:00:00"), new Date("2020/09/27 18:00:00"), TaskTypes.monitor));
+            mwRestGroupData.addSegmentData(new SegmentData(new Date("2020/09/27 19:00:00"), new Date("2020/09/28 08:00:00"), TaskTypes.rest));
+            eaiMonitorGroupData.addSegmentData(new SegmentData(new Date("2020/09/28 08:00:00"), new Date("2020/09/28 18:00:00"), TaskTypes.monitor));
+
+            mwGroup.addGroupData(eai1GroupData);
+            mwGroup.addGroupData(eai2GroupData);
+            mwGroup.addGroupData(eaiMonitorGroupData);
 
             let otherGroup = new Group("Other");
 
             let mbaGroupData = new GroupData("MBA");
             let mbaRestGroupData = new GroupData("MBA Rest");
 
-            mbaGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 14:00:00"), new Date("2020/09/26 15:00:00"), SegmentData.TaskTypes.prodRelease));
-            mbaGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 15:00:00"), new Date("2020/09/26 16:00:00"), SegmentData.TaskTypes.test));
-            mbaRestGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 09:00:00"), new Date("2020/09/26 14:00:00"), SegmentData.TaskTypes.rest));
+            mbaGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 14:00:00"), new Date("2020/09/26 15:00:00"), TaskTypes.prodRelease));
+            mbaGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 15:00:00"), new Date("2020/09/26 16:00:00"), TaskTypes.test));
+            mbaRestGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 09:00:00"), new Date("2020/09/26 14:00:00"), TaskTypes.rest));
             otherGroup.addGroupData(mbaRestGroupData);
             otherGroup.addGroupData(mbaGroupData);
 
@@ -56,7 +82,9 @@
             TimelinesChart()(document.getElementById('chart-div'))
                 .zScaleLabel('My Scale Units')
                 .zQualitative(true)
-                .data(myData);
+                .timeFormat('%m/%d %-I:%M %p')
+                .data(myData)
+                .width(800);
         </script>
     </div>
 </body>
