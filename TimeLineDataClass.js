@@ -11,8 +11,9 @@ class SegmentData {
      * @param {*} value value for property-val, could be integer or string or object
      */
     constructor(startDate, endDate, value) {
-        this.start = startDate;
-        this.end = endDate;
+        
+        this.start = Object.getPrototypeOf(new Date()) == Date.prototype ? startDate : new Date(startDate);
+        this.end = Object.getPrototypeOf(new Date()) == Date.prototype ? endDate : new Date(endDate);
         this.timeRange = [this.start, this.end]
         this.val = value;
     }
@@ -41,8 +42,8 @@ class GroupData {
      */
     constructor(label = "unnamed label", data) {
         this.label = label;
-        if (data === undefined) {
-            this.addSegmentData(data);
+        if (data !== undefined) {
+            this.addSegmentData(...data);
         }
     }
 
@@ -80,8 +81,8 @@ class Group {
      */
     constructor(group = "unnamed group", data) {
         this.group = group;
-        if (data === undefined) {
-            this.addGroupData(data);
+        if (data !== undefined) {
+            this.addGroupData(...data);
         }
     }
 
