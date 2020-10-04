@@ -5,8 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- <link rel="stylesheet" href="./TimeLineDataClass.js" type="text/Javascript"> -->
-    <script type="text/javascript" src='http://unpkg.com/timelines-chart'></script>
+    <script type="text/javascript" src='https://unpkg.com/timelines-chart@2.10.0/dist/timelines-chart.js'></script>
     <script type="text/javascript" src='./TimeLineDataClass.js'></script>
+    <script src="https://d3js.org/d3.v4.js"></script>
     <title>Timelines Chart Helper Sample</title>
     <script type="text/javascript">
         // import { SegmentData } from './TimeLineDataClass.mjs';
@@ -63,11 +64,42 @@
 
             mbaGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 14:00:00"), new Date("2020/09/26 15:00:00"), TaskTypes.prodRelease));
             mbaGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 15:00:00"), new Date("2020/09/26 16:00:00"), TaskTypes.test));
-            mbaRestGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 09:00:00"), new Date("2020/09/26 14:00:00"), TaskTypes.rest));
+            mbaRestGroupData.addSegmentData(new SegmentData(new Date("2020/09/26 09:00:00"), new Date("2020/10/26 14:00:00"), TaskTypes.rest));
             otherGroup.addGroupData(mbaRestGroupData);
             otherGroup.addGroupData(mbaGroupData);
 
             return [mwGroup, otherGroup];
+        }
+
+        function initTimeline(data, locale) {
+
+            // referenced sample --> https://bl.ocks.org/mbostock/805115ebaa574e771db1875a6d828949
+            var formatMillisecond = locale.format(".%L"),
+                    formatSecond = locale.format(":%S"),
+                    formatMinute = locale.format("%I:%M"),
+                    formatHour = locale.format("%I %p"),
+                    formatDay = locale.format("%a %d"),
+                    formatWeek = locale.format("%b %d"),
+                    formatMonth = locale.format("%B"),
+                    formatYear = locale.format("%Y");
+            function multiFormat(date) {
+                return (d3.timeSecond(date) < date ? formatMillisecond
+                    : d3.timeMinute(date) < date ? formatSecond
+                    : d3.timeHour(date) < date ? formatMinute
+                    : d3.timeDay(date) < date ? formatHour
+                    : d3.timeMonth(date) < date ? (d3.timeWeek(date) < date ? formatDay : formatWeek)
+                    : d3.timeYear(date) < date ? formatMonth
+                    : formatYear)(date);
+            }
+
+            var tc = TimelinesChart()(document.getElementById('chart-div'));
+            tc.zScaleLabel('My Scale Units');
+            tc.zQualitative(true);
+            tc.timeFormat('%m/%d %I:%M %p');
+            tc.xTickFormat(multiFormat);
+            tc.data(data);
+            tc.width(1000);
+            tc.maxLineHeight(24);
         }
     </script>
 </head>
@@ -77,14 +109,17 @@
     <div id="chart-div">
 
         <script>
+            // get timeline data.
             const myData = getMyData();
 
-            TimelinesChart()(document.getElementById('chart-div'))
-                .zScaleLabel('My Scale Units')
-                .zQualitative(true)
-                .timeFormat('%m/%d %-I:%M %p')
-                .data(myData)
-                .width(800);
+            // get timeline locale setting and load timeline chart.
+            // referenced sample --> https://bl.ocks.org/mbostock/6f1cc065d4d172bcaf322e399aa8d62f
+            d3.json("https://unpkg.com/d3-time-format@2/locale/ja-JP.json", function(error, locale) {
+                if (error) throw error;
+                locale = d3.timeFormatLocale(locale);
+                initTimeline(myData, locale);
+            });
+
         </script>
     </div>
 </body>
