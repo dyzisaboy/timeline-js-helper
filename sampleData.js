@@ -1,4 +1,5 @@
 var TaskTypes = {
+    stop: "Stop Process",
     addLib: "Prepare Library",
     uatRelease:  "UAT Release",
     prodRelease:  "Prod Release",
@@ -7,6 +8,9 @@ var TaskTypes = {
     rest:  "Break"
 }
 
+/**
+ * @deprecated
+ */
 function getMyData() {
 
     let mwGroup = new Group("MW");
@@ -53,4 +57,36 @@ function getMyData() {
     otherGroup.addGroupData(mbaGroupData);
 
     return [mwGroup, otherGroup];
+}
+
+function getSampleReleaseData() {
+    let sysA = new Group("System Group A", [
+        new GroupData("Front(Mike & Jone)", [
+            new SegmentData("2020-09-26 09:00:00", "2020-09-26 09:10:00", TaskTypes.stop),
+            new SegmentData("2020-09-26 09:10:00", "2020-09-26 09:30:00", TaskTypes.addLib),
+            new SegmentData("2020-09-26 09:30:00", "2020-09-26 10:00:00", TaskTypes.prodRelease),
+            new SegmentData("2020-09-26 10:00:00", "2020-09-26 10:30:00", TaskTypes.test),
+            new SegmentData("2020-09-26 10:30:00", "2020-09-26 13:00:00", TaskTypes.rest)
+        ])
+    ]);
+
+    let sysB = new Group("System Group B", [
+
+        new GroupData("End(Neo & Pill)", [
+            new SegmentData("2020-09-26 09:10:00", "2020-09-26 09:20:00", TaskTypes.stop),
+            new SegmentData("2020-09-26 09:30:00", "2020-09-26 10:00:00", TaskTypes.addLib),
+            new SegmentData("2020-09-26 10:30:00", "2020-09-26 11:00:00", TaskTypes.prodRelease),
+            new SegmentData("2020-09-26 11:00:00", "2020-09-26 11:30:00", TaskTypes.test),
+            new SegmentData("2020-09-26 11:30:00", "2020-09-26 13:00:00", TaskTypes.rest)
+        ]),
+        new GroupData("Middle(linda & rob)", [
+            new SegmentData("2020-09-26 09:20:00", "2020-09-26 09:30:00", TaskTypes.stop),
+            new SegmentData("2020-09-26 09:30:00", "2020-09-26 10:00:00", TaskTypes.addLib),
+            new SegmentData("2020-09-26 10:30:00", "2020-09-26 11:00:00", TaskTypes.prodRelease),
+            new SegmentData("2020-09-26 11:00:00", "2020-09-26 11:30:00", TaskTypes.test),
+            new SegmentData("2020-09-26 11:30:00", "2020-09-26 13:00:00", TaskTypes.rest)
+        ])
+    ]);
+
+    return [sysA, sysB];
 }

@@ -43,6 +43,7 @@
             tc.xTickFormat(multiFormat);
             tc.data(data);
             tc.width(1000);
+            tc.leftMargin(150).rightMargin(180);
             tc.maxLineHeight(24);
         }
     </script>
@@ -54,7 +55,7 @@
 
         <script>
             // get timeline data.
-            const myData = getMyData();
+            const myData = getSampleReleaseData();
 
             // get timeline locale setting and load timeline chart.
             // referenced sample --> https://bl.ocks.org/mbostock/6f1cc065d4d172bcaf322e399aa8d62f
