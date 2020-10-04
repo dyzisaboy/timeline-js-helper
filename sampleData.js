@@ -66,7 +66,8 @@ function getSampleReleaseData() {
             new SegmentData("2020-09-26 09:10:00", "2020-09-26 09:30:00", TaskTypes.addLib),
             new SegmentData("2020-09-26 09:30:00", "2020-09-26 10:00:00", TaskTypes.prodRelease),
             new SegmentData("2020-09-26 10:00:00", "2020-09-26 10:30:00", TaskTypes.test),
-            new SegmentData("2020-09-26 10:30:00", "2020-09-26 13:00:00", TaskTypes.rest)
+            new SegmentData("2020-09-26 10:30:00", "2020-09-26 13:00:00", TaskTypes.rest),
+            new SegmentData("2020-09-26 13:00:00", "2020-09-26 18:00:00", TaskTypes.monitor)
         ])
     ]);
 
@@ -75,16 +76,18 @@ function getSampleReleaseData() {
         new GroupData("End(Neo & Pill)", [
             new SegmentData("2020-09-26 09:10:00", "2020-09-26 09:20:00", TaskTypes.stop),
             new SegmentData("2020-09-26 09:30:00", "2020-09-26 10:00:00", TaskTypes.addLib),
-            new SegmentData("2020-09-26 10:30:00", "2020-09-26 11:00:00", TaskTypes.prodRelease),
+            new SegmentData("2020-09-26 10:00:00", "2020-09-26 11:00:00", TaskTypes.prodRelease),
             new SegmentData("2020-09-26 11:00:00", "2020-09-26 11:30:00", TaskTypes.test),
-            new SegmentData("2020-09-26 11:30:00", "2020-09-26 13:00:00", TaskTypes.rest)
+            new SegmentData("2020-09-26 11:30:00", "2020-09-26 13:00:00", TaskTypes.rest),
+            new SegmentData("2020-09-26 13:00:00", "2020-09-26 18:00:00", TaskTypes.monitor)
         ]),
         new GroupData("Middle(linda & rob)", [
             new SegmentData("2020-09-26 09:20:00", "2020-09-26 09:30:00", TaskTypes.stop),
             new SegmentData("2020-09-26 09:30:00", "2020-09-26 10:00:00", TaskTypes.addLib),
-            new SegmentData("2020-09-26 10:30:00", "2020-09-26 11:00:00", TaskTypes.prodRelease),
+            new SegmentData("2020-09-26 10:00:00", "2020-09-26 11:00:00", TaskTypes.prodRelease),
             new SegmentData("2020-09-26 11:00:00", "2020-09-26 11:30:00", TaskTypes.test),
-            new SegmentData("2020-09-26 11:30:00", "2020-09-26 13:00:00", TaskTypes.rest)
+            new SegmentData("2020-09-26 11:30:00", "2020-09-26 13:00:00", TaskTypes.rest),
+            new SegmentData("2020-09-26 13:00:00", "2020-09-26 18:00:00", TaskTypes.monitor)
         ])
     ]);
 
